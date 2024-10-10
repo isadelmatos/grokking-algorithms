@@ -24,6 +24,9 @@ function dijkstra(graph, start) {
                 minDistance = distances[node];
             }
         }
+
+        // condição de parada caso não possua mais vizinhos alcançáveis
+        if(minDistance === Infinity) break;
         
         // deleta o nó atual para que não possa ser visitado novamente
         nodes.delete(minNode);
