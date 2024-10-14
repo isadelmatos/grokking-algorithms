@@ -8,20 +8,21 @@ function findSubstring(word1, word2) {
     let endIndex = 0
 
     // cria a matriz baseada no tamanho das duas palavras
-    // cada linha da matriz corresponderá a uma letra da palavra um
-    // cada coluna da matriz corresponderá a uma letra da palavra dois
-    for(let i = 0; i < rows; i++) {
-        matrix[i] = new Array(columns).fill(0);
+    // adiciona um índice adicional para permitir o cálculo sem erros de fora dos limites
+    for(let i = 0; i <= rows; i++) {
+        matrix[i] = new Array(columns + 1).fill(0);
     }
  
     // testar se as letras da primeira palavra combinam com as letras da segunda
-    for(let i = 0; i < rows; i++) {
+    for(let i = 1; i <= rows; i++) {
 
-        for(let j = 0; j < columns; j++) {
+        for(let j = 1; j <= columns; j++) {
 
-            if(word1[i] == word2[j]) {
+            if(word1[i - 1] === word2[j - 1]) {
+
                 matrix[i][j] = matrix[i - 1][j - 1] + 1;
                 
+                // Verifica se a sequência encontrada é maior que a anterior
                 if(matrix[i][j] > maxLength) {
                     maxLength = matrix[i][j];
                     endIndex = i; 
@@ -30,9 +31,9 @@ function findSubstring(word1, word2) {
         }
     }
 
-    const commonSubstring = word1.slice((endIndex + 1) - maxLength, (endIndex + 1));
+    const commonSubstring = word1.slice(endIndex - maxLength, endIndex);
 
     return {commonSubstring, matrix};
 }
 
-console.log(findSubstring('blue', 'clues'));
+console.log(findSubstring('sun', 'sunflower'));
